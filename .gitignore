@@ -1,0 +1,14 @@
+# Node modules
+node_modules/
+
+# Build output
+/output.css
+
+# Local configuration files
+package.json
+
+# Tailwind CSS config file
+tailwind.config.js
+
+# Package lock file
+package-lock.json

@@ -1,0 +1,10 @@
+.main-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.main-grid {
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  gap: 30px
+}
