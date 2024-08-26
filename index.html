@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe</title>
-    <link href="./output.css" rel="stylesheet" />
+    <!-- <link href="./output.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="custom.css" />
   </head>
 
@@ -12,19 +12,35 @@
     <h1 class="p-6 bg-gradient-to-r from-green-400 to-blue-400">
       Tic-Tac-Toe!
     </h1>
+    <dialog>
+      <form action="">
+        <label for="player-one" class="player-one">Player One:</label>
+        <input type="text" placeholder="Name" id="player-one" />
+        <label for="player-two" class="player-two">Player 2:</label>
+        <input type="text" id="player-two" placeholder="Name" />
+        <button id="submit" type="button">Start Game</button>
+      </form>
+    </dialog>
+
     <div class="main-wrapper">
+      <div class="player-scores">
+        <div class="player-one-score">0</div>
+        <div class="player-two-score">0</div>
+      </div>
+
       <div class="main-grid">
-        <div class="zero">0</div>
-        <div class="first">1</div>
-        <div class="second">2</div>
-        <div class="third">3</div>
-        <div class="fourth">4</div>
-        <div class="fifth">5</div>
-        <div class="sixth">6</div>
-        <div class="seventh">7</div>
-        <div class="eigth">8</div>
+        <div class="zero" data-index="0"></div>
+        <div class="first" data-index="1"></div>
+        <div class="second" data-index="2"></div>
+        <div class="third" data-index="3"></div>
+        <div class="fourth" data-index="4"></div>
+        <div class="fifth" data-index="5"></div>
+        <div class="sixth" data-index="6"></div>
+        <div class="seventh" data-index="7"></div>
+        <div class="eigth" data-index="8"></div>
       </div>
     </div>
+
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,10 +1,64 @@
-.main-wrapper{
-    display: flex;
-    justify-content: center;
+.main-wrapper {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
-
+.player-scores {
+  display: flex;
+  margin-bottom: 50px;
+  gap: 50px;
+}
 .main-grid {
   display: grid;
-  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
-  gap: 30px
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  margin-bottom: 20px;
+}
+
+.main-grid div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
+/* Remove borders on the outer edges to create a "hand-drawn" effect */
+.main-grid .zero {
+  border-left: none;
+  border-top: none;
+}
+
+.main-grid .first {
+  border-top: none;
+}
+
+.main-grid .second {
+  border-top: none;
+  border-right: none;
+}
+
+.main-grid .third {
+  border-left: none;
+}
+
+.main-grid .fifth {
+  border-right: none;
+}
+
+.main-grid .sixth {
+  border-left: none;
+  border-bottom: none;
+}
+
+.main-grid .seventh {
+  border-bottom: none;
+}
+
+.main-grid .eigth {
+  border-right: none;
+  border-bottom: none;
 }
