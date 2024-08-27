@@ -4,42 +4,117 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe</title>
-    <!-- <link href="./output.css" rel="stylesheet" /> -->
+    <link href="./output.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" />
   </head>
 
-  <body>
-    <h1 class="p-6 bg-gradient-to-r from-green-400 to-blue-400">
+  <body class="bg-gray-100">
+    <h1
+      class="p-6 bg-gradient-to-r from-green-400 to-blue-400 text-white text-center text-4xl font-bold"
+    >
       Tic-Tac-Toe!
     </h1>
-    <dialog>
-      <form action="">
-        <label for="player-one" class="player-one">Player One:</label>
-        <input type="text" placeholder="Name" id="player-one" />
-        <label for="player-two" class="player-two">Player 2:</label>
-        <input type="text" id="player-two" placeholder="Name" />
-        <button id="submit" type="button">Start Game</button>
+
+    <dialog class="form-dialog bg-red p-6 rounded-lg shadow-lg" open>
+      <form action="" class="space-y-4">
+        <div>
+          <label
+            for="player-one"
+            class="block text-lg font-medium text-gray-700"
+            >Player One:</label
+          >
+          <input
+            type="text"
+            placeholder="Name"
+            id="player-one"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+        <div>
+          <label
+            for="player-two"
+            class="block text-lg font-medium text-gray-700"
+            >Player Two:</label
+          >
+          <input
+            type="text"
+            id="player-two"
+            placeholder="Name"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+        <button
+          id="submit"
+          type="button"
+          class="w-full py-2 px-4 bg-indigo-400 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          Start Game
+        </button>
       </form>
     </dialog>
 
-    <div class="main-wrapper">
-      <div class="player-scores">
-        <div class="player-one-score">0</div>
-        <div class="player-two-score">0</div>
+    <div class="main-wrapper hidden flex flex-col items-center mt-12">
+      <div class="player-scores flex gap-12 mb-12">
+        <div class="player-one-score text-2xl font-bold text-red-400"></div>
+        <div class="player-two-score text-2xl font-bold text-blue-400"></div>
       </div>
-
-      <div class="main-grid">
-        <div class="zero" data-index="0"></div>
-        <div class="first" data-index="1"></div>
-        <div class="second" data-index="2"></div>
-        <div class="third" data-index="3"></div>
-        <div class="fourth" data-index="4"></div>
-        <div class="fifth" data-index="5"></div>
-        <div class="sixth" data-index="6"></div>
-        <div class="seventh" data-index="7"></div>
-        <div class="eigth" data-index="8"></div>
+      <div class="main-grid grid grid-cols-3 grid-rows-3 gap-2">
+        <div
+          class="zero flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="0"
+        ></div>
+        <div
+          class="first flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="1"
+        ></div>
+        <div
+          class="second flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="2"
+        ></div>
+        <div
+          class="third flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="3"
+        ></div>
+        <div
+          class="fourth flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="4"
+        ></div>
+        <div
+          class="fifth flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="5"
+        ></div>
+        <div
+          class="sixth flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="6"
+        ></div>
+        <div
+          class="seventh flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="7"
+        ></div>
+        <div
+          class="eigth flex justify-center items-center text-4xl font-bold border-2 border-black cursor-pointer"
+          data-index="8"
+        ></div>
       </div>
     </div>
+
+    <dialog class="new-game-dialog bg-white p-6 rounded-lg shadow-lg">
+      <form action="" class="space-y-4">
+        <div class="winning-player text-2xl font-bold text-center mb-4"></div>
+        <button
+          type="button"
+          class="play-again w-full py-2 px-4 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        >
+          Play again
+        </button>
+        <button
+          type="button"
+          class="quit w-full py-2 px-4 bg-red-600 text-white font-semibold rounded-md shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+        >
+          Quit
+        </button>
+      </form>
+    </dialog>
 
     <script src="main.js"></script>
   </body>

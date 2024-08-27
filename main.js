@@ -1,31 +1,23 @@
-const player = function (name, marker) {
-  const playerName = name;
-  const playerMarker = marker;
+const player = function (playerName, playerMarker) {
+  const name = playerName;
+  const getName = () => name;
+
+  const marker = playerMarker;
+  const getMarker = () => marker;
+
   let score = 0;
   const getScore = () => score;
-  const addWin = function () {
-    score += 1;
-  };
+  const addWin = () => (score += 1);
+  const resetScore = () => (score = 0);
 
-  return { playerName, playerMarker, addWin, getScore };
+  return { getName, getMarker, addWin, getScore, resetScore };
 };
 
 const gameBoard = (function () {
   const grid = ["", "", "", "", "", "", "", "", ""];
-  let playerOne;
-  let playerTwo;
-  let currentPlayer;
 
   const resetBoard = function () {
-    for (let i = 0; i < grid.length; i++) {
-      grid[i] = "";
-    }
-  };
-
-  const initGame = function (playerOneName, playerTwoName) {
-    playerOne = player(playerOneName, "X");
-    playerTwo = player(playerTwoName, "O");
-    currentPlayer = playerOne;
+    grid.fill("");
   };
 
   const updateGrid = function (index, value) {
@@ -53,7 +45,7 @@ const gameBoard = (function () {
   };
 
   const checkDraw = function () {
-    return grid.every(function (cell) {
+    return grid.every((cell) => {
       return cell !== "";
     });
   };
@@ -64,88 +56,214 @@ const gameBoard = (function () {
     }
   };
 
-  const getCurrentPlayer = () => currentPlayer;
-
-  const changeCurrentPlayer = function () {
-    currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
-  };
-
   return {
     grid,
     updateGrid,
     checkWinner,
     checkDraw,
     checkValidMove,
-    getCurrentPlayer,
-    changeCurrentPlayer,
-    initGame,
     resetBoard,
   };
 })();
 
 const UIManager = function () {
-  const dialog = document.querySelector("dialog");
-  // show modal
-  const showModal = () => dialog.showModal();
-  const hideModal = () => dialog.close();
-
-  // get form inputs
-  const submitButton = document
-    .querySelector("#submit")
-    .addEventListener("click", function () {
-      const playerOneName = document.querySelector("#player-one").value;
-      const playerTwoName = document.querySelector("#player-two").value;
-      gameBoard.initGame(playerOneName, playerTwoName);
-      hideModal();
-      const mainWrapper = document.querySelector(".main-wrapper");
-      mainWrapper.classList.toggle("hidden");
-    });
-
-  // get DOM element, add event listener and game-flow
+  const mainWrapper = document.querySelector(".main-wrapper");
   const mainGrid = document.querySelector(".main-grid");
+  const playerOneScore = document.querySelector(".player-one-score");
+  const playerTwoScore = document.querySelector(".player-two-score");
 
-  const updateGrid = function (div, marker) {
+  const getMainGrid = () => mainGrid;
+
+  const updateUIGrid = function (div, marker) {
     div.textContent = marker;
+    if (marker === "X") {
+      div.classList.add("text-red-500");
+      div.classList.remove("text-blue-500");
+    } else if (marker === "O") {
+      div.classList.add("text-blue-500");
+      div.classList.remove("text-red-500");
+    }
   };
-
-  const resetBoard = function () {
+  const resetUIBoard = function () {
     allDivs = document.querySelectorAll(".main-grid>div");
     for (let div of allDivs) {
       div.textContent = "";
     }
   };
 
-  mainGrid.addEventListener("click", function (event) {
-    // get the current player
-    let currentPlayer = gameBoard.getCurrentPlayer();
-    // identify the clicked div
-    let clickedDiv = event.target;
-    // get index of the div clicked to update the grid array
-    let divIndex = parseInt(clickedDiv.getAttribute("data-index"));
-    // get marker of the current player
-    marker = currentPlayer.playerMarker;
-
-    // if it's a valid move
-    if (gameBoard.checkValidMove(divIndex)) {
-      // update the array grid and UI grid
-      gameBoard.updateGrid(divIndex, marker);
-      updateGrid(clickedDiv, marker);
-      // check if there is a winner
-      if (gameBoard.checkWinner() || gameBoard.checkDraw()) {
-        // show modal with playAgain or quit
-        // if playAgain, update the scores and reset board and UI
-      }
-      // Otherwise
-      gameBoard.changeCurrentPlayer();
-    } else {
-      alert("Invalid move");
+  const showBoard = function () {
+    if (mainWrapper.classList.contains("hidden")) {
+      mainWrapper.classList.toggle("hidden");
     }
-  });
+  };
 
-  return { resetBoard, showModal };
+  const updateScore = function (playerOne, playerTwo) {
+    playerOneScore.textContent = `${playerOne.getName()} : ${playerOne.getScore()}`;
+    playerTwoScore.textContent = `${playerTwo.getName()} : ${playerTwo.getScore()}`;
+  };
+
+  return {
+    updateUIGrid,
+    resetUIBoard,
+    showBoard,
+    getMainGrid,
+    updateScore,
+  };
+};
+
+const formManager = (function () {
+  // start game modal/form
+  const startGameModal = document.querySelector(".form-dialog");
+  const showStartModal = () => startGameModal.showModal();
+  const hideStartModal = () => startGameModal.close();
+
+  const playerOneInput = document.querySelector("#player-one");
+  const pLayerTwoInput = document.querySelector("#player-two");
+
+  const getPlayerOneName = () => playerOneInput.value;
+  const getPlayerTwoName = () => pLayerTwoInput.value;
+
+  const resetInputs = function () {
+    playerOneInput.value = "";
+    pLayerTwoInput.value = "";
+  };
+
+  const submitButton = document.querySelector("#submit");
+  const getSubmitButton = () => submitButton;
+
+  // end game modal
+  const endGameModal = document.querySelector(".new-game-dialog");
+  const winningPlayerDiv = document.querySelector(".winning-player");
+  const getWinningPlayerDiv = () => winningPlayerDiv;
+
+  const showEndModal = () => endGameModal.showModal();
+  const hideEndModal = () => endGameModal.close();
+
+  const playAgainButton = document.querySelector(".play-again");
+  const getPlayAgainButton = () => playAgainButton;
+
+  const quitButton = document.querySelector(".quit");
+  const getQuitButton = () => quitButton;
+
+  return {
+    showStartModal,
+    hideStartModal,
+    getPlayerOneName,
+    getPlayerTwoName,
+    getSubmitButton,
+    showEndModal,
+    hideEndModal,
+    getPlayAgainButton,
+    getQuitButton,
+    getWinningPlayerDiv,
+    resetInputs,
+  };
+})();
+
+const gameFlow = function () {
+  const uiManager = UIManager();
+  let playerOne;
+  let playerTwo;
+  let currentPlayer;
+  let index;
+  let clickedDiv;
+  let gameOver = true;
+
+  const initGame = function (playerOneName, playerTwoName) {
+    const p1Name = playerOneName === "" ? "Player One" : playerOneName;
+    const p2Name = playerTwoName === "" ? "Player Two" : playerTwoName;
+
+    playerOne = player(p1Name, "X");
+    playerTwo = player(p2Name, "O");
+    currentPlayer = playerOne;
+    gameOver = false;
+  };
+
+  const rebootGame = function () {
+    gameBoard.resetBoard();
+    uiManager.resetUIBoard();
+    gameOver = false;
+    formManager.hideEndModal();
+  };
+
+  const quitGame = function () {
+    gameBoard.resetBoard();
+    uiManager.resetUIBoard();
+    gameOver = true;
+    formManager.hideEndModal();
+    formManager.showStartModal();
+  };
+
+  const playAgainButton = formManager
+    .getPlayAgainButton()
+    .addEventListener("click", rebootGame);
+  const quitButton = formManager
+    .getQuitButton()
+    .addEventListener("click", quitGame);
+
+  const getMoveIndex = function (event) {
+    clickedDiv = event.target;
+    index = event.target.getAttribute("data-index");
+  };
+
+  const getCurrentPlayer = () => currentPlayer;
+
+  const changeCurrentPlayer = function () {
+    currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
+  };
+
+  // game logic
+  const playGame = function () {
+    submitForm = formManager.getSubmitButton();
+    submitForm.addEventListener("click", function () {
+      initGame(formManager.getPlayerOneName(), formManager.getPlayerTwoName());
+      console.log(playerOne.getName(), playerTwo.getName());
+      uiManager.showBoard();
+      uiManager.updateScore(playerOne, playerTwo);
+      formManager.hideStartModal();
+      formManager.resetInputs();
+    });
+
+    const grid = uiManager.getMainGrid();
+    grid.addEventListener("click", function (event) {
+      if (gameOver) {
+        return;
+      }
+      getMoveIndex(event);
+      // if it's a valid mmove
+      if (gameBoard.checkValidMove(index)) {
+        // update the array and the UI
+        gameBoard.updateGrid(index, getCurrentPlayer().getMarker());
+        uiManager.updateUIGrid(clickedDiv, getCurrentPlayer().getMarker());
+        // check if it's a win
+        if (gameBoard.checkWinner()) {
+          getCurrentPlayer().addWin();
+          uiManager.updateScore(playerOne, playerTwo);
+          gameOver = true;
+          formManager.getWinningPlayerDiv().textContent = `${getCurrentPlayer().getName()} wins!`;
+          formManager.showEndModal();
+        } else if (gameBoard.checkDraw()) {
+          gameOver = true;
+          formManager.getWinningPlayerDiv().textContent = "It's a tie.";
+          formManager.showEndModal();
+        }
+        changeCurrentPlayer();
+      } else {
+        alert("INVALID");
+      }
+    });
+  };
+
+  return {
+    getCurrentPlayer,
+    changeCurrentPlayer,
+    initGame,
+    playGame,
+    getMoveIndex,
+  };
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  UIInstance = UIManager();
-  UIInstance.showModal();
+  const startGame = gameFlow();
+  startGame.playGame();
 });

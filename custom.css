@@ -4,6 +4,15 @@
   align-items: center;
   flex-direction: column;
 }
+
+.hidden {
+  display: none;
+}
+
+.form-dialog{
+    margin-top: 50px
+}
+
 .player-scores {
   display: flex;
   margin-bottom: 50px;
